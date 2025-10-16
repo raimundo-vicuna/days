@@ -1,0 +1,73 @@
+body {
+  background: linear-gradient(135deg, #000000, #0f2027);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.03);
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h1 span {
+  color: cyan;
+}
+
+.date {
+  font-size: 1.5rem;
+  color: #00ffff;
+  margin-top: 0.5rem;
+}
+
+/* 📱 Estilos responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 2rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .date {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+
+  .container {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .date {
+    font-size: 1.1rem;
+  }
+}
