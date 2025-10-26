@@ -1,24 +1,22 @@
-const today = moment();
-const targetDate = moment("20-12-2025", "DD-MM-YYYY");
-const difference = targetDate.diff(today, "days");
 const weeks = document.querySelector('.weeks');
 const months = document.querySelector('.month');
+const days = document.querySelector('.days');
 const numberDate = document.querySelector(".number_date");
 const settings_button = document.querySelector(".settings");
-
-
 const inputDate = document.querySelector("#date");
+const saveButton = document.querySelector(".save-btn");
 
+let targetDate = moment("20-12-2025", "DD-MM-YYYY");
 
-function calcWeeks() {
-    let weeks = difference / 7
-    return weeks.toFixed(2)
-};
+function updateCountdown() {
+  const today = moment();
+  const difference = targetDate.diff(today, "days");
 
-function calcMonth() {
-    let months = difference / 30
-    return months.toFixed(2)
-};
+  numberDate.textContent = targetDate.format("MMMM D, YYYY");
+  days.textContent = `${difference} days left.`;
+  weeks.textContent = `${(difference / 7).toFixed(2)} Weeks`;
+  months.textContent = `${(difference / 30).toFixed(2)} Months`;
+}
 
 function showPopUp() {
   const container = document.querySelector(".container");
@@ -54,12 +52,11 @@ function hidePopUp() {
   }, 20);
 }
 
-
-
 function getData() {
-  const inputValue = inputDate.value; // "YYYY-MM-DD"
+  const inputValue = inputDate.value;
 
   if (!inputValue) {
+    alert("Please select a date first.");
     return false;
   }
 
@@ -70,25 +67,16 @@ function getData() {
     return false;
   }
 
-  const today = moment();
-  const difference = selectedDate.diff(today, "days");
-
-  weeks.textContent = `${(difference / 7).toFixed(2)} Weeks`;
-  months.textContent = `${(difference / 30).toFixed(2)} Months`;
-  numberDate.textContent = `${difference} days left.`;
-
+  targetDate = selectedDate;
+  updateCountdown();
   return true;
 }
 
-
 function saveChanges() {
-  getData()
-  hidePopUp()
+  const valid = getData();
+  if (valid) hidePopUp();
 }
 
-const saveButton = document.querySelector(".save-btn")
-saveButton.addEventListener("click", saveChanges)
-settings_button.addEventListener("click", showPopUp)
-weeks.textContent = `${calcWeeks()} Weeks`
-months.textContent = `${calcMonth()} Months`
-document.querySelector(".date").textContent = `${difference} days left.`;
+settings_button.addEventListener("click", showPopUp);
+saveButton.addEventListener("click", saveChanges);
+updateCountdown();
