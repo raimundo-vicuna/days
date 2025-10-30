@@ -1,55 +1,68 @@
-const weeks = document.querySelector('.weeks');
-const months = document.querySelector('.month');
-const days = document.querySelector('.days');
-const numberDate = document.querySelector(".number_date");
+const weeksUntil = document.querySelector('.weeks.until');
+const monthsUntil = document.querySelector('.month.until');
+const daysUntil = document.querySelector('.days.until');
+const numberDateUntil = document.querySelector(".number_date.until");
+
+const weeksFrom = document.querySelector('.weeks.from');
+const monthsFrom = document.querySelector('.month.from');
+const daysFrom = document.querySelector('.days.from');
+const numberDateFrom = document.querySelector(".number_date.from");
+
 const settings_button = document.querySelector(".settings");
 const inputDate = document.querySelector("#date");
 const saveButton = document.querySelector(".save-btn");
+const notificationCard = document.querySelector(".notificationCard");
+const datesTargets = document.querySelectorAll(".date");
+const AllowBtn = document.querySelector(".AllowBtn");
 
 let targetDate = moment("20-12-2025", "DD-MM-YYYY");
+let fromDate = moment("29-08-2025", "DD-MM-YYYY");
 
 function updateCountdown() {
   const today = moment();
-  const difference = targetDate.diff(today, "days");
 
-  numberDate.textContent = targetDate.format("MMMM D, YYYY");
-  days.textContent = `${difference} days left.`;
-  weeks.textContent = `${(difference / 7).toFixed(2)} Weeks`;
-  months.textContent = `${(difference / 30).toFixed(2)} Months`;
+  // Hasta (future)
+  const diffUntil = targetDate.diff(today, "days");
+  numberDateUntil.textContent = targetDate.format("MMMM D, YYYY");
+  daysUntil.textContent = `${diffUntil} days left.`;
+  weeksUntil.textContent = `${(diffUntil / 7).toFixed(2)} Weeks`;
+  monthsUntil.textContent = `${(diffUntil / 30).toFixed(2)} Months`;
+
+  // Desde (past)
+  const diffFrom = today.diff(fromDate, "days");
+  numberDateFrom.textContent = fromDate.format("MMMM D, YYYY");
+  daysFrom.textContent = `${diffFrom} days since.`;
+  weeksFrom.textContent = `${(diffFrom / 7).toFixed(2)} Weeks`;
+  monthsFrom.textContent = `${(diffFrom / 30).toFixed(2)} Months`;
+}
+
+function showInfoCard(message) {
+  notificationCard.style.display = "flex";
+  notificationCard.querySelector(".notificationPara").textContent = message;
+}
+
+function hideInfoCard() {
+  notificationCard.style.display = "none";
+}
+
+function hideElement(element) {
+  if (!element) return;
+  element.classList.remove("fade-in");
+  element.style.opacity = "0";
+  element.style.transform = "translate(-50%, -50%) scale(0.95)";
+  element.style.visibility = "hidden";
 }
 
 function showPopUp() {
-  const container = document.querySelector(".container");
-  const container2 = document.querySelector(".container2");
-
-  container.classList.add("fade-out");
-
-  setTimeout(() => {
-    container.style.visibility = "hidden";
-    container.style.opacity = "0";
-    container.style.transform = "scale(0.95)";
-
-    container2.style.visibility = "visible";
-    container2.classList.add("fade-in");
-  }, 300);
+  const container = document.querySelector(".container2");
+  container.style.visibility = "visible";
+  container.style.display = 'block';
+  container.classList.add("fade-in");
 }
 
 function hidePopUp() {
-  const container = document.querySelector(".container");
-  const container2 = document.querySelector(".container2");
-
-  container2.classList.remove("fade-in");
-  container2.style.opacity = "0";
-  container2.style.transform = "translate(-50%, -50%) scale(0.95)";
-  container2.style.visibility = "hidden";
-
-  container.style.visibility = "visible";
-
-  setTimeout(() => {
-    container.classList.add("fade-in");
-    container.style.opacity = "1";
-    container.style.transform = "translate(-50%, -50%) scale(1)";
-  }, 20);
+  const container = document.querySelector(".container2");
+  hideElement(container);
 }
 
 function getData() {
@@ -61,13 +74,14 @@ function getData() {
   }
 
   const selectedDate = moment(inputValue, "YYYY-MM-DD");
-
   if (selectedDate.isBefore(moment(), "day")) {
-    alert("The selected date cannot be earlier than today.");
-    return false;
+    fromDate = selectedDate;
+    showInfoCard("Past date updated successfully!");
+  } else {
+    targetDate = selectedDate;
+    showInfoCard("Future date updated successfully!");
   }
 
-  targetDate = selectedDate;
   updateCountdown();
   return true;
 }
@@ -77,6 +91,11 @@ function saveChanges() {
   if (valid) hidePopUp();
 }
 
+datesTargets.forEach((element) => {
+  element.addEventListener("click", () => showInfoCard("Click the settings gear to change the date"));
+});
 settings_button.addEventListener("click", showPopUp);
 saveButton.addEventListener("click", saveChanges);
+AllowBtn.addEventListener("click", hideInfoCard);
+
 updateCountdown();
