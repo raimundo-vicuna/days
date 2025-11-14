@@ -1,0 +1,210 @@
+:root {
+  --bg: #121212;
+  --panel: #1e1e1e;
+  --accent: #00e5ff;
+  --text: #ffffff;
+  --muted: #bfbfbf;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.container,
+.container2 {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.container:hover,
+.container2:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 40px rgba(0, 229, 255, 0.2);
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.title span {
+  color: var(--accent);
+}
+
+.dates {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.date {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.2rem 1.8rem;
+  min-width: 110px;
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.date:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.date::before {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.date.days::before { content: "Days"; }
+.date.weeks::before { content: "Weeks"; }
+.date.month::before { content: "Months"; }
+
+.date-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+input[type="date"] {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+}
+
+.save-btn {
+  background: var(--accent);
+  border: none;
+  color: #021;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #00c9e0;
+  transform: scale(1.05);
+}
+
+.top-bar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.top-bar i.fa-gear {
+  color: var(--muted);
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.top-bar i.fa-gear:hover {
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
+/* Notification */
+.notificationCard {
+  position: absolute;
+  display: none;
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.notificationHeading {
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.notificationPara {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.AllowBtn {
+  background: var(--accent);
+  border: none;
+  color: #021;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.AllowBtn:hover {
+  background: #00c9e0;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  .dates {
+    flex-direction: column;
+  }
+  .date {
+    font-size: 1.2rem;
+    min-width: 100px;
+  }
+  .date-input {
+    flex-direction: column;
+  }
+}
